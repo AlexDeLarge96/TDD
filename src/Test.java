@@ -20,13 +20,23 @@ public class Test {
         return result.length == 0;
     }
 
+    public static boolean TestForNullArray() {
+        OrderArray sortArray = new OrderArray();
+        int[] result = sortArray.Order(null);
+        return result == null ? true : false;
+    }
+
     public static void main(String[] args) {
 
         if (OrderTest()) {
             System.out.println("Ordering Test with array not null and not empty was successful");
         }
         if (TestForEmptyArray()) {
-            System.out.println("Ordering Test fro empty array was successful");
+            System.out.println("Ordering Test for empty array was successful");
+        }
+
+        if (TestForNullArray()) {
+            System.out.println("Ordering test for null array was successful");
         }
     }
 }
