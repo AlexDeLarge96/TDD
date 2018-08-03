@@ -1,9 +1,10 @@
 public class Test {
 
+    private OrderArray sortArray = new OrderArray();
+
     public static boolean OrderTest() {
         int[] testArray = {20, 1, 5, 14, 34, 7, 9, 17, 23, 10};
         int[] expectedResult = {1, 5, 7, 9, 10, 14, 17, 20, 23, 34};
-        OrderArray sortArray = new OrderArray();
         int[] result = sortArray.Order(testArray);
         int cont=0;
         for (int i = 0; i < result.length; i++) {
@@ -11,7 +12,13 @@ public class Test {
                 cont++;
             }
         }
-        return cont == expectedResult.length ? true : false;
+        return cont == expectedResult.length;
+    }
+
+    public static boolean TestForEmptyArray()
+    {
+        int[] result=sortArray.Order(new int[5]);
+        return result.length==0;
     }
 
     public static void main(String[] args) {
