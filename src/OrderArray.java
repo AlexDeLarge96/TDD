@@ -1,66 +1,69 @@
 public class OrderArray {
 
-    public OrderArray() {
-
-    }
-
     public int[] Order(int[] array) {
-        boolean ordered = false;
-        int acu;
-        int cont = 0;
-        if (array == null) {
-            return null;
-        } else {
-            if (array.length != 0) {
-                while (!ordered) {
-                    for (int i = 0; i < array.length - 1; i++) {
-                        if (array[i + 1] < array[i]) {
-                            acu = array[i];
-                            array[i] = array[i + 1];
-                            array[i + 1] = acu;
-                        } else {
-                            cont++;
-                        }
-                    }
-                    if (cont == array.length) {
-                        ordered = true;
+
+        int count = 0;
+        if (!checkNull(array) && !checkEmpty(array)) {
+            while (!isOrdered(array, count)) {
+                for (int position = 0; position < array.length - 1; position++) {
+                    if (array[position + 1] < array[position]) {
+                        array = swapValues(array, position, position + 1);
+                    } else {
+                        count++;
                     }
                 }
             }
-            return array;
         }
+        return array;
     }
 
-    private static int Partition(int[] array, int indexLow, int indexHigh) {
+    public int[] QuickSort(int[] array) {
+        if (!checkNull(array) && !checkEmpty(array)) {
+            return QuickSort(array, 0, array.length - 1);
+        } else return array;
+    }
+
+    private boolean checkNull(int[] array) {
+        return array == null;
+    }
+
+    private boolean checkEmpty(int[] array) {
+        return array.length == 0;
+    }
+
+    private boolean isOrdered(int[] array, int count) {
+        return count == array.length;
+    }
+
+    private int[] swapValues(int[] array, int indexA, int indexB) {
+        int acu = array[indexA];
+        array[indexA] = array[indexB];
+        array[indexB] = acu;
+        return array;
+    }
+
+    private int[] QuickSort(int[] array, int indexLow, int indexHigh) {
+
+        if (indexLow < indexHigh) {
+            int p = Partition(array, indexLow, indexHigh);
+            QuickSort(array, indexLow, p - 1);
+            QuickSort(array, p + 1, indexHigh);
+        }
+        return array;
+    }
+
+    private int Partition(int[] array, int indexLow, int indexHigh) {
         int pivot = array[indexHigh];
         int i = indexLow - 1;
-        int acu;
         for (int j = indexLow; j <= indexHigh - 1; j++) {
             if (array[j] < pivot) {
                 i = i + 1;
-                acu = array[i];
-                array[i] = array[j];
-                array[j] = acu;
+                array = swapValues(array, i, j);
             }
         }
-        acu = array[i + 1];
-        array[i + 1] = array[indexHigh];
-        array[indexHigh] = acu;
+        swapValues(array, i + 1, indexHigh);
         return i + 1;
     }
 
-    public int[] QuickSort(int[] array, int indexLow, int indexHigh) {
-        if (array == null) {
-            return null;
-        } else {
-            if (array.length != 0) {
-                if (indexLow < indexHigh) {
-                    int p = Partition(array, indexLow, indexHigh);
-                    QuickSort(array, indexLow, p - 1);
-                    QuickSort(array, p + 1, indexHigh);
-                }
-            }
-            return array;
-        }
-    }
+
 }
